@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Muscu</title>
+
+	<style>
+	body{
+		background:#00316d;
+	}
+	.editBtn{
+	float:right;
+	padding-right:10px;
+	}
+	#pages{
+		width:100%;
+		height:100%;
+		position:absolute;
+		top:0px;
+		left:0px;
+		display:none;
+		padding-top:0px;
+	}
+	#pages h1{
+		margin-bottom: 0px;
+		background:#00316d;
+		text-align:left;
+		color:white;
+		padding-top:10px;
+		height:30px;
+		font-size: 18px;
+
+		text-shadow: 1px 2px 3px #444;
+
+
+		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#153e6d+0,1d629b+50,17578f+51,268bd8+100 */
+		background: -moz-linear-gradient(top, rgba(21,62,109,1) 0%, rgba(29,98,155,1) 50%, rgba(23,87,143,1) 51%, rgba(38,139,216,1) 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top, rgba(21,62,109,1) 0%,rgba(29,98,155,1) 50%,rgba(23,87,143,1) 51%,rgba(38,139,216,1) 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom, rgba(21,62,109,1) 0%,rgba(29,98,155,1) 50%,rgba(23,87,143,1) 51%,rgba(38,139,216,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+	}
+	#pages h1 a{
+		border-radius: 0px 20px 20px 0px;
+		background:#00316d;
+		color:#fff;
+		text-decoration: none;
+		padding:4px;
+		padding-right:15px;
+		margin-right:10px;
+	}
+	#pages h1 span{
+		padding:5px;
+		height:30px;
+		padding-top:10px;
+
+		text-shadow: 2px 2px 4px #999;
+	}
+	#pages .list{
+		margin-top:0px;
+		padding-top:0px;
+	}
+	#pages .bottom{
+		margin-bottom:40px;
+	}
+	#pages .list .block{
+		border-bottom:1px solid white;
+		float:left;
+		width:100%;
+
+		background: -moz-linear-gradient(top, rgba(125,185,232,0) 0%, rgba(114,173,223,0) 12%, rgba(97,155,209,0) 30%, rgba(30,87,153,1) 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top, rgba(125,185,232,0) 0%,rgba(114,173,223,0) 12%,rgba(97,155,209,0) 30%,rgba(30,87,153,1) 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom, rgba(125,185,232,0) 0%,rgba(114,173,223,0) 12%,rgba(97,155,209,0) 30%,rgba(30,87,153,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+
+	}
+		#pages .list .block h2{
+			/*background:white;*/
+			margin-top:4px;
+			margin-left:6px;
+			color:white;
+			font-weight:normal;
+			font-size:12px;
+		}
+	.clearbox{
+		clear:both;
+	}
+	ul{
+		margin:0px;
+		padding:0px;
+	}
+	li{
+		list-style: none;
+ 	}
+	li a{
+		padding:12px;
+		padding-top:16px;
+		padding-bottom:18px;
+		display:block;
+		border-bottom:2px solid #00316d;
+		color:#fff;
+		text-decoration: none;
+
+
+		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7db9e8+0,1e5799+100&0+12,0+30,1+100 */
+		background: -moz-linear-gradient(top, rgba(125,185,232,0) 0%, rgba(114,173,223,0) 12%, rgba(97,155,209,0) 30%, rgba(30,87,153,1) 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top, rgba(125,185,232,0) 0%,rgba(114,173,223,0) 12%,rgba(97,155,209,0) 30%,rgba(30,87,153,1) 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom, rgba(125,185,232,0) 0%,rgba(114,173,223,0) 12%,rgba(97,155,209,0) 30%,rgba(30,87,153,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+
+	}
+	.btn{
+		border-radius: 5px;
+		background:#fff;
+		color:#00316d;
+		padding:5px 12px;
+		text-decoration: none;
+		margin:4px;
+	}
+
+	.sublinks h2{
+		color:white;
+		margin:0px;
+	}
+
+	</style>
+</head>
+
+<body>
+    <div id="loading" class="app">
+        <h1>PhoneGap</h1>
+        <div id="deviceready" class="blink">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
+    </div>
+	<div id="pages">
+	</div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+
+	<script type="text/javascript" src="js/model/program.js?v=20170703_2330"></script>
+	<script type="text/javascript" src="js/model/session.js?v=20170703_2330"></script>
+	<script type="text/javascript" src="js/model/exercize.js?v=20170703_2330"></script>
+	<script type="text/javascript" src="js/model/histo.js?v=20180121_1354"></script>
+
+	<script type="text/javascript" src="js/html/link.js?v=20170703_2330"></script>
+	<script type="text/javascript" src="js/html/items.js?v=20171220_2157"></script>
+	<script type="text/javascript" src="js/html/sublink.js?v=20180107_1606"></script>
+	<script type="text/javascript" src="js/html/chartLine.js?v=20170703_2330"></script>
+
+	<script type="text/javascript" src="js/pages.js?v=20180121_1354"></script>
+    <script type="text/javascript" src="js/index.js?v=20170703_2330"></script>
+
+
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>
